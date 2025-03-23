@@ -30,3 +30,118 @@
     <script src="script.js"></script>
 </body>
 </html>
+```
+
+styles.css
+```
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    margin-bottom: 0.5em;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+}
+
+button[type="button"] {
+    padding: 0.5em 1em;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+button[type="button"]:hover {
+    background-color: #444;
+}
+
+#error-message {
+    color: #f00;
+    font-size: 0.8em;
+    margin-top: 0.5em;
+}
+
+#result {
+    margin-top: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+```
+
+script.js
+```
+const form = document.getElementById('swap-form');
+const resultDiv = document.getElementById('result');
+const errorMessageDiv = document.getElementById('error-message');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const inputCoin = document.getElementById('input-coin').value;
+    const inputAmount = document.getElementById('input-amount').value;
+    const outputCoin = document.getElementById('output-coin').value;
+    const outputAmount = document.getElementById('output-amount').value;
+    const taxa = document.getElementById('taxa').value / 100;
+
+    try {
+        const response = await fetch('https://api.cosmostation.io/v1/swap', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                inputCoin,
+                inputAmount,
+                outputCoin,
+                outputAmount,
+                taxa
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        resultDiv.innerHTML = `
+            <h2>Resultado da Troca</h2>
+            <p>Input Coin: ${data.inputCoin}</p>
+            <p>Input Amount: ${data.inputAmount}</p>
+            <p>Output Coin: ${data.outputCoin}</p>
+            <p>Output Amount: ${data.output
