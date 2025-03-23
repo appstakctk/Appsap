@@ -145,4 +145,3 @@ form.addEventListener('submit', async (e) => {
             <p>Input Amount: ${data.inputAmount}</p>
             <p>Output Coin: ${data.outputCoin}</p>
             <p>Output Amount: ${data.output
-
