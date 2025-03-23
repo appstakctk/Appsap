@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troca de Tokens</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Troca de Tokens</h1>
+    </header>
+    <main>
+        <form id="swap-form">
+            <label for="input-coin">Input Coin:</label>
+            <input type="text" id="input-coin" value="MANTLE (MNTL)">
+            <label for="input-amount">Amount:</label>
+            <input type="number" id="input-amount" value="62.961709">
+            <label for="output-coin">Output Coin:</label>
+            <input type="text" id="output-coin" value="SHENTU (CTK)">
+            <label for="output-amount">Amount:</label>
+            <input type="number" id="output-amount" value="0.026826">
+            <label for="taxa">Taxa (%):</label>
+            <input type="number" id="taxa" value="0.5">
+            <button id="swap-button">Swap</button>
+            <div id="error-message"></div>
+        </form>
+        <div id="result"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
