@@ -1,16 +1,33 @@
+Aqui está o código completo com as mudanças:
+
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Troca de Tokens</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Swap</title>
+    <style>
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/osmosis-zone-sdk@latest/dist/osmosis-zone-sdk.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Troca de Tokens</h1>
-    </header>
-    <main>
+    <div class="container">
+        <h1>Swap</h1>
         <form id="swap-form">
             <label for="input-coin">Input Coin:</label>
             <input type="text" id="input-coin" value="MANTLE (MNTL)">
@@ -23,125 +40,36 @@
             <label for="taxa">Taxa (%):</label>
             <input type="number" id="taxa" value="0.5">
             <button id="swap-button">Swap</button>
-            <div id="error-message"></div>
         </form>
-        <div id="result"></div>
-    </main>
-    <script src="script.js"></script>
+        <iframe src="https://app.osmosis.zone/" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
+    <script>
+        const apikey = "SEU_API_KEY_AQUI";
+        const osmosisZone = new OsmosisZone(apikey);
+
+        document.getElementById("swap-button").addEventListener("click", async () => {
+            const inputCoin = document.getElementById("input-coin").value;
+            const inputAmount = document.getElementById("input-amount").value;
+            const outputCoin = document.getElementById("output-coin").value;
+            const outputAmount = document.getElementById("output-amount").value;
+            const taxa = document.getElementById("taxa").value / 100;
+
+            try {
+                const response = await osmosisZone.swap(inputCoin, inputAmount, outputCoin, outputAmount, taxa);
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
 </body>
 </html>
 ```
 
-styles.css
-```
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
+Esse código inclui as mudanças que fizemos anteriormente, incluindo:
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em;
-    text-align: center;
-}
+- O estilo para o iframe para que ele seja ajustado para ocupar toda a tela
+- O estilo para o container do iframe para que ele seja flexível e ajuste o tamanho do iframe
+- O código JavaScript para realizar a troca usando a API da Osmosis Zone
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2em;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1em;
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    margin-bottom: 0.5em;
-}
-
-input[type="text"], input[type="number"] {
-    padding: 0.5em;
-    margin-bottom: 1em;
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
-}
-
-button[type="button"] {
-    padding: 0.5em 1em;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 0.5em;
-    cursor: pointer;
-}
-
-button[type="button"]:hover {
-    background-color: #444;
-}
-
-#error-message {
-    color: #f00;
-    font-size: 0.8em;
-    margin-top: 0.5em;
-}
-
-#result {
-    margin-top: 1em;
-    padding: 1em;
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-```
-
-script.js
-```
-const form = document.getElementById('swap-form');
-const resultDiv = document.getElementById('result');
-const errorMessageDiv = document.getElementById('error-message');
-
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const inputCoin = document.getElementById('input-coin').value;
-    const inputAmount = document.getElementById('input-amount').value;
-    const outputCoin = document.getElementById('output-coin').value;
-    const outputAmount = document.getElementById('output-amount').value;
-    const taxa = document.getElementById('taxa').value / 100;
-
-    try {
-        const response = await fetch('https://api.cosmostation.io/v1/swap', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                inputCoin,
-                inputAmount,
-                outputCoin,
-                outputAmount,
-                taxa
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.error) {
-            throw new Error(data.error);
-        }
-
-        resultDiv.innerHTML = `
-            <h2>Resultado da Troca</h2>
-            <p>Input Coin: ${data.inputCoin}</p>
-            <p>Input Amount: ${data.inputAmount}</p>
-            <p>Output Coin: ${data.outputCoin}</p>
-            <p>Output Amount: ${data.output
+Lembre-se de que você precisará substituir "SEU_API_KEY_AQUI" pela sua API Key real da Osmosis Zone.
